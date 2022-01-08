@@ -28,6 +28,8 @@
  * @brief Demonstrates usage of the MQTT library.
  */
 
+#include "aws_RxParser.h"
+
 /* The config header is always included first. */
 #include "iot_config.h"
 
@@ -238,10 +240,15 @@ static void _operationCompleteCallback( void * param1,
 static void _mqttSubscriptionCallback( void * param1,
                                        IotMqttCallbackParam_t * const pPublish )
 {
+	int payloadlen=0;
+	int topicnamelen=0;
+
     int acknowledgementLength = 0;
     size_t messageNumberIndex = 0, messageNumberLength = 1;
     IotSemaphore_t * pPublishesReceived = ( IotSemaphore_t * ) param1;
     const char * pPayload = pPublish->u.message.info.pPayload;
+    const char * pTopicName = pPublish->u.message.info.pTopicName;
+
     char pAcknowledgementMessage[ ACKNOWLEDGEMENT_MESSAGE_BUFFER_LENGTH ] = { 0 };
     IotMqttPublishInfo_t acknowledgementInfo = IOT_MQTT_PUBLISH_INFO_INITIALIZER;
 
@@ -260,6 +267,13 @@ static void _mqttSubscriptionCallback( void * param1,
                 pPublish->u.message.info.qos,
                 pPublish->u.message.info.payloadLength,
                 pPayload );
+
+    /*yhs */
+    payloadlen=pPublish->u.message.info.payloadLength;
+    topicnamelen=pPublish->u.message.info.topicNameLength;
+
+    aws_RxMqttParse(pPayload,payloadlen,pTopicName,topicnamelen);
+
 
     /* Find the message number inside of the PUBLISH message. */
     for( messageNumberIndex = 0; messageNumberIndex < pPublish->u.message.info.payloadLength; messageNumberIndex++ )
