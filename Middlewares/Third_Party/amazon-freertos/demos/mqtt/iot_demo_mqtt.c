@@ -501,7 +501,7 @@ static int _establishMqttConnection( bool awsIotMqttMode,
  * @return `EXIT_SUCCESS` if the subscription operation succeeded; `EXIT_FAILURE`
  * otherwise.
  */
-static int _modifySubscriptions( IotMqttConnection_t mqttConnection,
+int _modifySubscriptions( IotMqttConnection_t mqttConnection,
                                  IotMqttOperationType_t operation,
                                  const char ** pTopicFilters,
                                  void * pCallbackParameter )
