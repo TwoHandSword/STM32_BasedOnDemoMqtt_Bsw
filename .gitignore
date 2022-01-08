@@ -6923,3 +6923,4 @@ Middlewares/Third_Party/mbedTLS/visualc/VS2010/udp_proxy.vcxproj
 Middlewares/Third_Party/mbedTLS/visualc/VS2010/zeroize.vcxproj
 Projects/STM32CubeProjectsList.html
 Utilities/teraterm/TERATERM.INI
+.metadata/
